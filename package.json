@@ -1,0 +1,21 @@
+{
+  "name": "snake-controller",
+  "version": "1.0.0",
+  "description": "An application to control the snake",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "arduino",
+    "snake",
+    "serial",
+    "node"
+  ],
+  "author": "r-arvind",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^7.1.5",
+    "socket.io": "^2.2.0"
+  }
+}

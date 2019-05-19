@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" /> -->
+	<!-- <script src="http://code.jquery.com/jquery-1.8.3.js"></script> -->
+	<!-- <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> -->
+	<script src="/socket.io/socket.io.js"></script>
+	<style>
+		body{
+			width:"100%";
+			margin:0;
+			padding:0;
+		}
+		.camera,
+		.monitor {
+			width: 400px;
+			height: 400px;
+			background-color: rgb(133, 134, 134);
+			margin:20px;
+		}
+		.monitor{
+			overflow-y: scroll;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>Data to Arduino</h2>
+	<div id="btnHolder">
+		<button id="check" onclick="iosocket.emit('buttonval',1);">Front</button>
+		<button id="check" onclick="iosocket.emit('buttonval',2);">Back</button>
+		<button id="check" onclick="iosocket.emit('buttonval',3);">Left</button>
+		<button id="check" onclick="iosocket.emit('buttonval',4);">Right</button>
+		<button id="check" onclick="iosocket.emit('buttonval',0);">Stop</button>
+	</div>
+	<div style="display: flex;flex:1;flex-direction: row;">
+		<div class="monitor" id="monitor"></div>
+		<!-- <div class="camera"><video autoplay="true" id="videoElement"></video></div> -->
+	</div>
+</body>
+<script>
+	var iosocket;
+	var pollOneH = 0;
+	var poll1;
+	var text;
+	var potValue;
+	var prevPotValue;
+	//var onOff = false; 
+	var toggleVal = 10;
+
+
+	function initSocketIO() {
+		iosocket = io.connect();
+		// iosocket.on('onconnection', function(value) {
+		// pollOneH = value.pollOneValue/2; // recieve start poll value from server
+		// iosocket.on('updateData', function (recievedData) {
+		// 	pollOneH = recievedData.pollOneValue/2; // recieve start poll value from server
+		// });
+		// });
+	}
+
+	window.onload = function () {
+		initSocketIO();
+
+	};
+	var p = document.createElement("p");
+	io.connect().on('update', function (data) {
+		// console.log("updated", data);
+		p.innerHTML = data;
+		document.getElementById("monitor").appendChild(p);
+	})
+</script>
+<!-- <script>
+	var video = document.querySelector("#videoElement");
+
+	if (navigator.mediaDevices.getUserMedia) {
+		console.log(navigator.mediaDevices);
+		navigator.mediaDevices.getUserMedia({
+				video: true
+			})
+			.then(function (stream) {
+				video.srcObject = stream;
+			})
+			.catch(function (err0r) {
+				console.log("Something went wrong!");
+			});
+	}
+</script> -->
+
+</html>
