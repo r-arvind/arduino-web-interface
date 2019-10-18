@@ -15,7 +15,9 @@
   "author": "r-arvind",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/speech": "^3.2.5",
     "serialport": "^7.1.5",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "sonus": "^1.0.3"
   }
 }

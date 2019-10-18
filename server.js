@@ -4,7 +4,15 @@ socketio = require('socket.io'),
 url = require("url"), 
 SerialPort = require("serialport")
 // console.log(getPortList());
+// const Sonus = require('sonus')
+// const speech = require('@google-cloud/speech')
+// const client = new speech.SpeechClient()
 
+// const hotwords = [{ file: './pages/mythri.pmdl', hotword: 'mythri' }]
+// const sonus = Sonus.init({ hotwords }, client)
+// Sonus.start(sonus)
+// sonus.on('hotword', (index, keyword) => console.log("!"))
+// sonus.on('final-result', console.log)
 var socketServer;
 var serialPort;
 var portName = '/dev/ttyACM0'; //change this to your Arduino port
@@ -13,7 +21,15 @@ var sendData = "";
 function startServer(handle,debug)
 {
 	function onRequest(request, response) {
-	  return handle(response,request);
+		// console.log(request.url);
+		if(request.url == "/pages/mythri.pmdl"){
+  response.writeHead(200, {"Content-Type": "application/file"});
+			var html = fs.readFileSync(__dirname + "/pages/mythri.pmdl");
+			response.end(html);
+		}
+		else{
+			return handle(response,request);
+		}
 	}
 	
 	var httpServer = http.createServer(onRequest).listen(1337, function(){

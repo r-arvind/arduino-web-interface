@@ -86,6 +86,9 @@
 			/* background: pink; */
 			align-items: center;
 		}
+		.button{
+			border: 0; padding:10px 20px; background: rgb(223, 223, 223);margin:10px;cursor: pointer;
+		}
 		
 	</style>
 </head>
@@ -93,24 +96,26 @@
 <body>
 	<h2>Data to Arduino</h2>
 	<div style="display: flex;flex-direction: row;justify-content: center;">
-	<div class="controls">
+	<div class="controls" id="controls">
 		<div class="top">
 			<div class="flex-col">
-			<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval',1);console.log('forward')"></i>
-			<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval',2);console.log('backward')"></i>
+			<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval','a');console.log('forward')"></i>
+			<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval','b');console.log('backward')"></i>
 			</div>
 		</div>
 		<div class="bottom">
 			<div class="bottom-left r240 flex-col">
-					<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval',3);console.log(' 120 forward')"></i>
-					<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval',4);console.log(' 120 backward')"></i>
+					<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval','c');console.log(' 120 forward')"></i>
+					<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval','d');console.log(' 120 backward')"></i>
 			</div>
 			<div class="bottom-right r120 flex-col">
-					<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval',5);console.log('300 forward')"></i>
-					<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval',6);console.log('300 backward')"></i>
+					<i class="fas fa-caret-up" onclick="iosocket.emit('buttonval','e');console.log('300 forward')"></i>
+					<i class="fas fa-caret-up down" onclick="iosocket.emit('buttonval','f');console.log('300 backward')"></i>
 			</div>
 		</div>
-		<button style="border: 0; padding:10px 20px; background: rgb(223, 223, 223);margin:10px;cursor: pointer;" onclick="iosocket.emit('buttonval',7);">Reset</button>
+		<button style="border: 0; padding:10px 20px; background: rgb(223, 223, 223);margin:10px;cursor: pointer;" onclick="iosocket.emit('buttonval','g');">Reset</button><br />
+		<button style="border: 0; padding:10px 20px; background: rgb(223, 223, 223);margin:10px;cursor: pointer;" onclick="saveLocation()">Add Location</button><br />
+		<!-- <button style="border: 0; padding:10px 20px; background: rgb(223, 223, 223);margin:10px;cursor: pointer;" onclick="iosocket.emit('buttonval',7);">Reset</button> -->
 	</div>
 	<!-- <div id="btnHolder">
 		<button id="check" onclick="iosocket.emit('buttonval',1);">Front</button>
@@ -134,6 +139,7 @@
 	var prevPotValue;
 	//var onOff = false; 
 	var toggleVal = 10;
+	var locationNum = 1;
 
 
 	function initSocketIO() {
@@ -158,6 +164,20 @@
 		document.getElementById("monitor").appendChild(p);
 		
 	})
+
+	function saveLocation(){
+		var num = ("0" + locationNum).slice(-2);
+		iosocket.emit('buttonval','h');
+		var b = document.createElement("button");
+		b.innerHTML = num;
+		b.className = "button"
+		b.onclick = function(){
+			iosocket.emit('buttonval',b.innerHTML);
+			console.log(b.innerHTML);
+		}
+		document.getElementById("controls").appendChild(b);
+		locationNum ++;
+	}
 </script>
 <!-- <script>
 	var video = document.querySelector("#videoElement");

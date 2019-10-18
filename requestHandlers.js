@@ -5,8 +5,10 @@
 var fs = require('fs'),
 server = require('./server');
 
-function sendInterface(response) {
+function sendInterface(response,request) {
   // console.log("Request handler 'interface' was called.");
+  // console.log(request);
+
   response.writeHead(200, {"Content-Type": "text/html"});
   var html = fs.readFileSync(__dirname + "/pages/interface.html")
   response.end(html);
